@@ -28,32 +28,32 @@ public class Test {
 
         int numbOfVertices = 4;
 
-//        g2.addVertex(0);
-//        g2.addVertex(1);
-//        g2.addVertex(2);
-//        g2.addVertex(3);
-//
-//        g2.addEdge("Edge-1", 0, 1);
-//        g2.addEdge("Edge-2", 0, 2);
-//        g2.addEdge("Edge-3", 0, 3);
-//
-//        g2.addEdge("Edge-4", 1, 0);
-//        g2.addEdge("Edge-5", 2, 0);
-//        g2.addEdge("Edge-6", 3, 0);
+        g2.addVertex(0);
+        g2.addVertex(1);
+        g2.addVertex(2);
+        g2.addVertex(3);
 
-        for (int i = 0; i < numbOfVertices; i++) {
-            g2.addVertex((Integer)i);
-        }
+        g2.addEdge("Edge-1", 0, 1);
+        g2.addEdge("Edge-2", 0, 2);
+        g2.addEdge("Edge-3", 0, 3);
 
-        for (int i = 0; i < numbOfVertices; i++) {
-            if (new Random().nextBoolean()) {
-                int randomEdge = new Random().nextInt(((numbOfVertices - 1) - 0) + 1) + 0;
-                while (randomEdge == i) {
-                    randomEdge = new Random().nextInt(((numbOfVertices - 1) - 0) + 1) + 0;
-                }
-                g2.addEdge("Edge-" + i , i, randomEdge);
-            }
-        }
+        g2.addEdge("Edge-4", 1, 0);
+        g2.addEdge("Edge-5", 2, 0);
+        g2.addEdge("Edge-6", 3, 0);
+
+//        for (int i = 0; i < numbOfVertices; i++) {
+//            g2.addVertex((Integer)i);
+//        }
+//
+//        for (int i = 0; i < numbOfVertices; i++) {
+//            if (new Random().nextBoolean()) {
+//                int randomEdge = new Random().nextInt(((numbOfVertices - 1) - 0) + 1) + 0;
+//                while (randomEdge == i) {
+//                    randomEdge = new Random().nextInt(((numbOfVertices - 1) - 0) + 1) + 0;
+//                }
+//                g2.addEdge("Edge-" + i , i, randomEdge);
+//            }
+//        }
 
 //        System.out.println("The graph g2 = " + g2.toString());
 
@@ -79,17 +79,19 @@ public class Test {
         double weights[] = new double[numbOfVertices];
         Arrays.fill(weights, 0.25);
 
-
+        boolean flag = true;
         double newWeight = 0;
         for (int j = 0; j < 100; j++) {
-            for (int i = 0; i < numbOfVertices; i++) {
+            for (int i = 0; i < numbOfVertices && flag; i++) {
                 Collection successors = g2.getSuccessors(i);
                 for (Iterator<Integer> iterator = successors.iterator(); iterator.hasNext();) {
                     int number = iterator.next();
                     newWeight += ((d * weights[number])/g2.getInEdges(number).size());
                 }
                 newWeight += newSurfers;
-                if (newWeight - weights[i] < 0.9) {
+                if (Math.abs(newWeight - weights[i]) < 0.0001) {
+                    flag = false;
+                    System.out.println("Exited at " + j);
                     break;
                 }
                 weights[i] = newWeight;
