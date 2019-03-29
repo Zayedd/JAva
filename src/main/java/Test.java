@@ -9,6 +9,8 @@ import java.awt.*;
 import java.util.*;
 
 public class Test {
+    public static int total=0;
+
     public static void main(String[] args) {
         Graph<Integer, String> g2 = new DirectedSparseGraph<Integer, String>();
 
@@ -43,14 +45,16 @@ public class Test {
         g2.addEdge("Edge-5", 2, 0);
         g2.addEdge("Edge-6", 3, 0);
 
-//        System.out.println("The graph g2 = " + g2.toString());
+        System.out.println("Phase #1:\nThe graph g2 = " + g2.toString() + "\n--------------------------------------");
 
 
         //Phase 2
-
+        System.out.println("Phase 2:");
+//        generation((numbOfVertices * (numbOfVertices - 1)) / 2, numbOfVertices, g2.getEdgeCount());
 
 
         // Phase 3
+        System.out.println("Phase 3:");
         double d = 0.85;
         double newSurfers = (1 - d) / numbOfVertices;
 
@@ -70,15 +74,27 @@ public class Test {
                 newWeight += newSurfers;
                 if (Math.abs(newWeight - weights[i]) < 0.0001) {
                     flag = false;
-                    System.out.println("Exited at " + j);
+                    System.out.println("Exited at iteration #" + j);
                     break;
                 }
                 weights[i] = newWeight;
                 newWeight = 0;
             }
         }
-        Arrays.sort(weights);
-        System.out.println(Arrays.toString(weights));
+//        Arrays.sort(weights);
+        double highestRank = weights[0];
+        int indexOfHighestNodeRank = 0;
+        for (int i = 1; i < weights.length; i++) {
+            if (weights[i] > highestRank) {
+                highestRank = weights[i];
+                indexOfHighestNodeRank = i;
+            }
+        }
+        System.out.println("Highest Node Rank is Node #" + indexOfHighestNodeRank + " with rank: " + (Math.round(highestRank * 1000.0) / 1000.0));
+        System.out.println("Node Ranks:");
+        for (int i = 0; i < weights.length; i++) {
+            System.out.println("Node #" + i + " rank: " + Math.round(weights[i] * 1000.0) / 1000.0);
+        }
 
 
 
@@ -98,5 +114,31 @@ public class Test {
         frame.getContentPane().add(vv);
         frame.pack();
         frame.setVisible(true);
+    }
+
+    public static void generation(int p, int n , int e)
+    {
+
+        int E = p; // to start from total connected graph
+
+        while(E>=0){ // calculate maximum number of simple graph with e
+
+            if (E != e){ // to ignore the same # of edges within graph
+                int pCe = (factorial(p) / (factorial(p - E) * factorial(E)));
+                total += pCe;
+            }
+            E--; // to go down to calculate # of graph with E edges
+        }
+        System.out.println("Total Number of Non-isomorphic Graphs = " + total + "\n--------------------------------------");
+
+    }
+    public static int factorial(int n) {
+
+        int fact = 1;
+
+        for (int i = 1; i <= n; i++) {
+            fact = fact * i;
+        }
+        return fact;
     }
 }
