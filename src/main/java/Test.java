@@ -9,7 +9,7 @@ import java.awt.*;
 import java.util.*;
 
 public class Test {
-    public static int total=0;
+    static double total=0;
 
     public static void main(String[] args) {
         Graph<Integer, String> g2 = new DirectedSparseGraph<Integer, String>();
@@ -50,7 +50,7 @@ public class Test {
 
         //Phase 2
         System.out.println("Phase 2:");
-//        generation((numbOfVertices * (numbOfVertices - 1)) / 2, numbOfVertices, g2.getEdgeCount());
+        generation((numbOfVertices * (numbOfVertices - 1)) / 2, numbOfVertices, g2.getEdgeCount());
 
 
         // Phase 3
@@ -116,26 +116,19 @@ public class Test {
         frame.setVisible(true);
     }
 
-    public static void generation(int p, int n , int e)
-    {
-
+    static void generation(int p, int n , int e) {
         int E = p; // to start from total connected graph
-
         while(E>=0){ // calculate maximum number of simple graph with e
-
             if (E != e){ // to ignore the same # of edges within graph
-                int pCe = (factorial(p) / (factorial(p - E) * factorial(E)));
+                double pCe = (factorial(p)) / ((factorial(p - E)) * (factorial(E)));
                 total += pCe;
             }
             E--; // to go down to calculate # of graph with E edges
         }
         System.out.println("Total Number of Non-isomorphic Graphs = " + total + "\n--------------------------------------");
-
     }
-    public static int factorial(int n) {
-
-        int fact = 1;
-
+     static double factorial(int n) {
+        double fact = 1;
         for (int i = 1; i <= n; i++) {
             fact = fact * i;
         }
