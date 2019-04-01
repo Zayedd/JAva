@@ -101,11 +101,11 @@ public class Test {
 
         // Draw the Graph
         Layout<Integer, String> layout = new CircleLayout(g2);
-        layout.setSize(new Dimension(950,950)); // sets the initial size of the space
+        layout.setSize(new Dimension(750,750)); // sets the initial size of the space
         // The BasicVisualizationServer<V,E> is parameterized by the edge types
         BasicVisualizationServer<Integer,String> vv =
                 new BasicVisualizationServer<Integer,String>(layout);
-        vv.setPreferredSize(new Dimension(1000,1000)); //Sets the viewing area size
+        vv.setPreferredSize(new Dimension(800,800)); //Sets the viewing area size
         vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
         vv.getRenderer().getVertexLabelRenderer().setPosition(Renderer.VertexLabel.Position.CNTR);
 
