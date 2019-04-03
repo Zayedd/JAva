@@ -56,7 +56,7 @@ public class Test {
         // Phase 3
         System.out.println("Phase 3:");
         double d = 0.85;
-        double newSurfers = (1 - d) / numbOfVertices;
+        double newSurfers = Math.round((1 - d) / numbOfVertices * 1000.0) / 1000.0;
 
         double weights[] = new double[numbOfVertices];
         Arrays.fill(weights, 0.25);
@@ -64,7 +64,7 @@ public class Test {
         boolean flag = true;
         double newWeight = 0;
 
-        for (int j = 0; j < 100; j++) {
+        for (int j = 1; j <= 100; j++) {
             for (int i = 0; i < numbOfVertices && flag; i++) {
                 Collection successors = g2.getSuccessors(i);
                 for (Iterator<Integer> iterator = successors.iterator(); iterator.hasNext();) {
@@ -72,7 +72,7 @@ public class Test {
                     newWeight += ((d * weights[number])/g2.getInEdges(number).size());
                 }
                 newWeight += newSurfers;
-                if (Math.abs(newWeight - weights[i]) < 0.0001) {
+                if (newWeight != weights[i] && Math.abs(newWeight - weights[i]) < 0.0001) {
                     flag = false;
                     System.out.println("Exited at iteration #" + j);
                     break;
